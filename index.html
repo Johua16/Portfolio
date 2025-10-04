@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Joshua Dele Matthews – Web Developer</title>
+  <meta name="description" content="Portfolio of Dele Matthews, creative web developer and physics major from University of Abuja.">
+  <style>
+    :root{
+      --bg:#0e1016;
+      --text:#eaf0ff;
+      --muted:#9aa3b2;
+      --accent:#e11d48; /* pink/red accent */
+      --panel:#121622;
+      --ring: rgba(225,29,72,.25);
+    }
+    /* Light theme (toggle) */
+    .light{
+      --bg:#f7f9ff;
+      --text:#0b1220;
+      --muted:#4b5566;
+      --panel:#ffffff;
+      --ring: rgba(225,29,72,.18);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; background:var(--bg); color:var(--text);}
+
+    .container{width:min(1100px,92vw);margin:0 auto}
+
+    header{position:sticky;top:0;z-index:10;background:linear-gradient(to bottom, rgba(0,0,0,.25), transparent);backdrop-filter:saturate(140%) blur(6px)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.3px}
+    .brand .logo{width:24px;height:24px;border-radius:8px;background:conic-gradient(from 220deg, var(--accent), #9b1c92 60%, #3b82f6)}
+    .nav a{color:var(--text);text-decoration:none;opacity:.9;padding:8px 10px;border-radius:10px}
+    .nav a:hover{background:#1a2133;opacity:1}
+    .nav .btn{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid rgba(255,255,255,.12);border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.2));color:var(--text)}
+
+    .hero{min-height:calc(100svh - 64px);display:grid;align-items:center}
+    .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center}
+
+    h1{font-size:clamp(34px,6vw,72px);line-height:1.05;margin:0 0 8px}
+    .accent{color:var(--accent)}
+    .lead{font-size:clamp(16px,1.8vw,20px);color:var(--muted);max-width:60ch;margin:10px 0 26px}
+
+    .cta{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border:1px solid rgba(255,255,255,.12);border-radius:999px;text-decoration:none;color:var(--text);background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.2))}
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{background:var(--accent);border-color:transparent;color:#fff}
+
+    .photo{aspect-ratio:3/4;border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0f1322}
+    .photo img{width:100%;height:100%;object-fit:cover}
+
+    section.about{padding:64px 0;border-top:1px solid rgba(255,255,255,.08)}
+    section.about h2{font-size:clamp(28px,4vw,42px);margin-bottom:12px;color:var(--accent)}
+    section.about p{color:var(--muted);max-width:70ch;line-height:1.6}
+    .facts{display:grid;gap:8px;margin:14px 0 4px;color:var(--muted)}
+    .skills{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+    .chip{padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);font-size:14px}
+
+    /* Experience timeline */
+    section.experience{padding:64px 0;border-top:1px solid rgba(255,255,255,.08)}
+    section.experience h2{font-size:clamp(28px,4vw,42px);margin-bottom:6px}
+    .timeline{border-left:2px dashed rgba(255,255,255,.12);padding-left:16px;display:grid;gap:14px}
+    .item{background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.12));border:1px solid rgba(255,255,255,.1);padding:14px;border-radius:14px}
+    .item small{color:var(--muted)}
+
+    /* Projects */
+    section.projects{padding:64px 0;border-top:1px solid rgba(255,255,255,.08)}
+    section.projects h2{font-size:clamp(28px,4vw,42px);margin-bottom:6px}
+    .sub{color:var(--muted);margin:0 0 18px}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+    .card{grid-column:span 6;background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.15));border:1px solid rgba(255,255,255,.1);padding:16px;border-radius:16px}
+    .thumb{aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#0f1322;border:1px solid rgba(255,255,255,.08);display:grid;place-items:center;color:#9aa3b2}
+    .card h3{margin:10px 0 6px}
+    .stack{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .links{display:flex;gap:10px;margin-top:10px}
+    .mini{font-size:13px;color:var(--muted)}
+
+    /* Contact */
+    section.contact{padding:64px 0;border-top:1px solid rgba(255,255,255,.08)}
+    section.contact h2{font-size:clamp(28px,4vw,42px);margin-bottom:6px}
+    form.contact-form{display:grid;gap:12px;max-width:560px}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    input, textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:var(--text)}
+    textarea{min-height:120px;resize:vertical}
+    input:focus, textarea:focus{outline:2px solid var(--accent);box-shadow:0 0 0 6px var(--ring);border-color:var(--accent)}
+    .status{min-height:20px;color:var(--muted);font-size:13px}
+    .contact-aside{opacity:.9}
+
+    footer{color:var(--muted);padding:24px 0;border-top:1px solid rgba(255,255,255,.08)}
+
+    /* Reveal on scroll */
+    .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease}
+    .show{opacity:1; transform:none}
+
+    @media (max-width: 900px){
+      .hero-grid{grid-template-columns:1fr}
+      .card{grid-column:span 12}
+      .row{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand"><div class="logo" aria-hidden="true"></div> <span>Dele Matthews</span></div>
+      <nav style="display:flex;gap:8px;align-items:center">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+        <button id="themeToggle" class="btn" type="button" aria-pressed="false">🌙/☀️ Theme</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <main class="container hero reveal" id="home">
+    <section class="hero-grid" aria-labelledby="intro-title">
+      <div>
+        <h1 id="intro-title">Hi, I’m <span class="accent"> Joshua Dele Matthews</span></h1>
+        <p class="lead">Creative frontend developer & Physics major (University of Abuja). I build clean, responsive interfaces with <strong>HTML</strong>, <strong>CSS</strong> and <strong>JavaScript</strong> — currently learning <strong>React</strong>. I love turning ideas into fast, accessible experiences.</p>
+        <div class="cta">
+  <a class="btn primary" href="#projects">See My Work</a>
+  <a class="btn" href="resume.pdf" download>Download CV</a>
+</div>
+
+      </div>
+      <div class="photo" role="img" aria-label="Portrait of Dele Matthews">
+        <img src="JOSH.jpeg" alt="Dele Matthews portrait" />
+      </div>
+    </section>
+  </main>
+
+  <!-- ABOUT SECTION (STEP 2) -->
+  <section class="about container reveal" id="about">
+    <h2>About Me</h2>
+    <p>I’m a student of the <strong>University of Abuja</strong>, majoring in <strong>Physics</strong>. During my industrial training at <strong>Sentry Technologies</strong> in 2025, I gained hands-on experience in practical web development and teamwork. I enjoy solving problems creatively through code and design, turning complex ideas into intuitive interfaces.</p>
+    <div class="facts">
+      <div>• I care about performance and accessibility (a11y).</div>
+      <div>• I’m learning React and planning a realtime drawing board project.</div>
+      <div>• I love clean UI, semantic HTML, and reusable CSS.</div>
+    </div>
+    <div class="skills">
+      <span class="chip">HTML5</span>
+      <span class="chip">CSS3 (Flexbox & Grid)</span>
+      <span class="chip">JavaScript (ES6+)</span>
+      <span class="chip">Responsive Design</span>
+      <span class="chip">Git & GitHub</span>
+      <span class="chip">React (Learning)</span>
+      <span class="chip">Firebase (Basics)</span>
+      <span class="chip">Problem Solving</span>
+      <span class="chip">Creativity</span>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE TIMELINE (EXTRA) -->
+  <section class="experience container reveal" id="experience" aria-labelledby="exp-title">
+    <h2 id="exp-title">Experience & Timeline</h2>
+    <div class="timeline">
+      <div class="item">
+        <strong>IT Intern – Sentry Technologies</strong>
+        <div><small>2025 • Practical web development, teamwork & documentation</small></div>
+        <ul>
+          <li>Worked on UI polish and semantic markup under mentorship.</li>
+          <li>Practiced Git workflows and code reviews.</li>
+        </ul>
+      </div>
+      <div class="item">
+        <strong>B.Sc. Physics – University of Abuja</strong>
+        <div><small>2022 – Present</small></div>
+        <ul>
+          <li>Strengthening problem-solving and analytical thinking.</li>
+          <li>Building projects that connect physics intuition with code.</li>
+        </ul>
+      </div>
+      <div class="item">
+        <strong>Web Development Journey</strong>
+        <div><small>2020 – Present</small></div>
+        <ul>
+          <li>Self‑taught foundations in HTML, CSS, and JavaScript.</li>
+          <li>Shipped personal projects and iterated based on feedback.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS SECTION (STEP 3) -->
+  <section class="projects container reveal" id="projects" aria-labelledby="projects-title">
+    <h2 id="projects-title">Projects</h2>
+    <p class="sub">A few things I’ve built or am building. Replace the links with your live demos and GitHub repos.</p>
+    <div class="grid">
+      <article class="card" aria-labelledby="p1-title">
+        <div class="thumb">
+          <img src="https://images.unsplash.com/photo-1516542076529-1ea3854896e1?q=80&w=1600&auto=format&fit=crop" alt="GiftBridge hero placeholder screenshot" style="width:100%;height:100%;object-fit:cover;filter:saturate(.95) contrast(1.05)">
+        </div>
+        <h3 id="p1-title">GiftBridge</h3>
+        <p>A clean, category-first gifting site. Built with semantic HTML and custom CSS, optimized for simple navigation and fast load.</p>
+        <div class="stack"><span class="chip">HTML</span><span class="chip">CSS</span></div>
+        <div class="links">
+          <a class="btn primary" href="https://johua16.github.io/giftbridge/index.html#categories" target="_blank" rel="noopener">Live</a>
+        </div>
+      </article>
+
+      <article class="card" aria-labelledby="p2-title">
+        <div class="thumb">Realtime Board</div>
+        <h3 id="p2-title">Realtime Drawing Board (WIP)</h3>
+        <p>Collaborative canvas planned with Firebase auth + Firestore syncing.</p>
+        <div class="stack"><span class="chip">JavaScript</span><span class="chip">Firebase</span><span class="chip">React (soon)</span></div>
+        <p class="mini">Coming soon — link to repo available.</p>
+        <div class="links">
+          <a class="btn" href="#" target="_blank" rel="noopener">Code</a>
+        </div>
+      </article>
+
+      <article class="card" aria-labelledby="p3-title">
+        <div class="thumb">Fendor</div>
+        <h3 id="p3-title">Fendor</h3>
+        <p>An e-commerce concept store showcasing modern UI and clean product layouts. Features product cards, categories, and a smooth cart flow (in progress).</p>
+        <div class="stack"><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span></div>
+        <p class="mini">Demo coming soon — repo will be added when ready.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION (STEP 4) -->
+  <section class="contact container reveal" id="contact" aria-labelledby="contact-title">
+    <h2 id="contact-title">Contact</h2>
+    <p class="sub">Got a role or project? Let’s talk.</p>
+    <div class="grid" style="align-items:start">
+      <div class="card" style="grid-column:span 7">
+      
+        <form id="contactForm" class="contact-form"
+        action="https://formspree.io/f/movkljjq" method="POST" novalidate>
+    <input type="hidden" name="_subject" value="New message from your portfolio" />
+    <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+    <div class="row">
+      <div>
+        <label for="name">Name</label>
+        <input id="name" name="name" placeholder="Your name" required>
+      </div>
+      <div>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="you@email.com" required>
+      </div>
+    </div>
+    <div>
+      <label for="message">Message</label>
+      <textarea id="message" name="message" placeholder="Say hello…" required></textarea>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <button class="btn primary" type="submit">Send Message</button>
+      <span id="formStatus" class="status" role="status" aria-live="polite"></span>
+    </div>
+  </form>
+  ...
+      </div>
+      <div class="card contact-aside" style="grid-column:span 5">
+        <h3 style="margin:0 0 8px">Elsewhere</h3>
+        <ul style="list-style:none;padding:0;margin:0;display:grid;gap:8px">
+  <li>Email: <a class="btn" href="mailto:delematthewsjoshua@gmail.com">delematthewsjoshua@gmail.com</a></li>
+  <li>Phone: <span class="btn" style="cursor:default">08069135853 / 07083007063</span></li>
+  <li>GitHub: <a class="btn" href="https://github.com/johua16" target="_blank" rel="noopener">github.com/johua16</a></li>
+  <li>LinkedIn: <a class="btn" href="#" target="_blank" rel="noopener">Add later</a></li>
+</ul>
+
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">© <span id="year"></span> Joshua Dele Matthews</div>
+  </footer>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Reveal on scroll
+    const revealEls = document.querySelectorAll('.reveal');
+    const ro = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); ro.unobserve(e.target); } });
+    }, {threshold: 0.15});
+    revealEls.forEach(el=>ro.observe(el));
+
+    // Theme toggle with localStorage
+    const root = document.body;
+    const toggle = document.getElementById('themeToggle');
+    const saved = localStorage.getItem('theme');
+    if(saved==='light'){ root.classList.add('light'); toggle.setAttribute('aria-pressed','true'); }
+    toggle.addEventListener('click',()=>{
+      const isLight = root.classList.toggle('light');
+      toggle.setAttribute('aria-pressed', String(isLight));
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    });
+
+    // Contact form (Formspree AJAX)
+  const form = document.getElementById('contactForm');
+  const statusEl = document.getElementById('formStatus');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    statusEl.textContent = '';
+
+    const data = new FormData(form);
+
+    // basic validation (client-side)
+    const errors = [];
+    if (!data.get('name') || data.get('name').trim().length < 2) errors.push('Enter your name.');
+    const email = data.get('email');
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push('Enter a valid email.');
+    if (!data.get('message') || data.get('message').trim().length < 10) errors.push('Message should be at least 10 characters.');
+    if (errors.length) { statusEl.textContent = errors.join(' '); return; }
+
+    try {
+      const resp = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (resp.ok) {
+        statusEl.textContent = 'Thanks! Your message has been sent.';
+        form.reset();
+      } else {
+        statusEl.textContent = 'Hmm, something went wrong. Please try again.';
+      }
+    } catch {
+      statusEl.textContent = 'Network error. Please try again.';
+    }
+  });
+  </script>
+</body>
+</html>
