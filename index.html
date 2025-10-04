@@ -101,21 +101,90 @@
       .card{grid-column:span 12}
       .row{grid-template-columns:1fr}
     }
+    /* ===== Mobile refinements ===== */
+
+/* Prevent side-scroll on small screens */
+html, body { overflow-x: hidden; }
+
+/* Make tap targets comfy */
+button, .btn, input, textarea { min-height: 44px; }
+
+/* Ensure images scale */
+img { max-width: 100%; height: auto; }
+
+/* Container breathing room on phones */
+@media (max-width: 900px) {
+  .container { width: min(100%, 92vw); }
+  .hero-grid { grid-template-columns: 1fr; gap: 20px; }
+  .photo { aspect-ratio: 1/1; } /* square avatar feels better on small screens */
+  .cta { gap: 10px; }
+  .btn { padding: 12px 16px; }
+  .grid .card { grid-column: span 12; }
+  .row { grid-template-columns: 1fr; } /* contact form two inputs stack */
+}
+
+/* Very small phones */
+@media (max-width: 560px) {
+  h1 { font-size: clamp(28px, 8vw, 42px); }
+  .lead { font-size: 15px; }
+  header .nav a { padding: 10px 12px; }
+  input, textarea { font-size: 16px; } /* avoid iOS zoom */
+  .btn { width: 100%; justify-content: center; } /* stack CTAs full width */
+}
+/* Mobile menu button */
+.menu-btn {
+  display: none;
+  border: 1px solid rgba(255,255,255,.12);
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.2));
+  color: inherit;
+  border-radius: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  /* Hide the desktop nav initially, show the button */
+  #mainNav { display: none !important; }
+  .menu-btn { display: inline-flex; align-items: center; gap: 6px; }
+
+  /* When open, make the nav a simple dropdown panel */
+  #mainNav.open {
+    display: grid !important;
+    position: absolute;
+    top: 56px; right: 16px; left: 16px;
+    gap: 6px;
+    padding: 12px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.25));
+    z-index: 50;
+  }
+  #mainNav.open a, #mainNav.open .btn { width: 100%; }
+}
+
   </style>
 </head>
 <body>
   <header>
-    <div class="container nav">
-      <div class="brand"><div class="logo" aria-hidden="true"></div> <span>Dele Matthews</span></div>
-      <nav style="display:flex;gap:8px;align-items:center">
-        <a href="#about">About</a>
-        <a href="#experience">Experience</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-        <button id="themeToggle" class="btn" type="button" aria-pressed="false">🌙/☀️ Theme</button>
-      </nav>
-    </div>
-  </header>
+  <div class="container nav">
+    <div class="brand"><div class="logo" aria-hidden="true"></div> <span>Dele Matthews</span></div>
+
+    <!-- Add this button -->
+    <button id="menuBtn" class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav">
+      ☰
+    </button>
+
+    <!-- Add an id to your nav -->
+    <nav id="mainNav" style="display:flex;gap:8px;align-items:center">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+      <button id="themeToggle" class="btn" type="button" aria-pressed="false">🌙/☀️ Theme</button>
+    </nav>
+  </div>
+</header>
+
 
   <!-- HERO SECTION -->
   <main class="container hero reveal" id="home">
@@ -331,6 +400,22 @@
       statusEl.textContent = 'Network error. Please try again.';
     }
   });
+
+  // Mobile nav toggle
+const menuBtn = document.getElementById('menuBtn');
+const mainNav = document.getElementById('mainNav');
+if (menuBtn && mainNav) {
+  menuBtn.addEventListener('click', () => {
+    const open = mainNav.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', String(open));
+  });
+  // Close on link click (optional nicety)
+  mainNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mainNav.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+  }));
+}
+
   </script>
 </body>
 </html>
